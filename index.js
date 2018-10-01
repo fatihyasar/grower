@@ -13,9 +13,7 @@ var Board = GrovePi.board
 
 // Don't forget to update accessToken constant with your device access token
 const thingsboardHost = "demo.thingsboard.io";
-const accessToken = "anz9ypkbUThTmyRgIqen";
-
-
+const accessToken = "<token>";
 
 // Initialization of temperature and humidity data with random values
 var data = {
@@ -68,7 +66,7 @@ var board = new Board({
       if (res) {
         console.log('GrovePi Version :: ' + board.version())
         var dhtSensor = new DHTDigitalSensor(6, DHTDigitalSensor.VERSION.DHT21, DHTDigitalSensor.CELSIUS)
-	var humidityRelay = new DigitalRelay(7);
+	    var humidityRelay = new DigitalRelay(7);
         var humidityRelayStatus  = new DigitalRelayState(7);
 
         // DHT Sensor
