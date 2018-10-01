@@ -89,6 +89,7 @@ var board = new Board({
             client.publish('v1/devices/me/telemetry', JSON.stringify(data));
             console.log('data sent');
 
+            /*
             console.log('applying humidity autopilot - device state is : ' + data.humidityDeviceState);
             if(data.humidity < 50) {
                 if(data.humidityDeviceState == 1 ){
@@ -107,7 +108,7 @@ var board = new Board({
                   humidityRelay.turnOn();
                 }      
             }
-
+            */
             i2c1.closeSync();
 	   }else {
 		console.log('DHT21 sensor values are incorrect. Skipping parsing data..');
