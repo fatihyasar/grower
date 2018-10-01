@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/fatihyasar/grower/issues"
   },
-  "homepage": "https://github.com/fatihyasar/grower#readme"
+  "homepage": "https://github.com/fatihyasar/grower#readme",
+  "dependencies": {
+    "bindings": "^1.3.0",
+    "buffertools": "^2.1.6",
+    "i2c-bus": "^3.2.0",
+    "install": "^0.11.0",
+    "mqtt": "^2.18.1",
+    "node-grovepi": "^2.2.2",
+    "npm": "^6.1.0",
+    "sleep": "^5.1.1"
+  }
 }
