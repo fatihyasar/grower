@@ -13,7 +13,7 @@ var Board = GrovePi.board
 
 // Don't forget to update accessToken constant with your device access token
 const thingsboardHost = "demo.thingsboard.io";
-const accessToken = "<token>";
+const accessToken = "anz9ypkbUThTmyRgIqen";
 
 // Initialization of temperature and humidity data with random values
 var data = {
