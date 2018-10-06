@@ -16,8 +16,8 @@ app.get('/', function(req, res) {
 //mqtt 
 client.on('connect', function () {
     console.log('Connected MQTT server');
-    client.subscribe('presence', function (err) {
-        console.log('Subscribed to channel. Error : ' + err);
+    client.subscribe('/sensors/temperature', function (err) {
+        console.log('Subscribed to temperature channel. Error : ' + err);
         if (!err) {
         //client.publish('presence', 'Hello mqtt')
       }
