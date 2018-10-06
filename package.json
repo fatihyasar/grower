@@ -1,0 +1,26 @@
+{
+  "name": "grower",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fatihyasar/grower.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fatihyasar/grower/issues"
+  },
+  "homepage": "https://github.com/fatihyasar/grower#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "mqtt": "^2.18.8",
+    "socket.io": "^2.1.1"
+  }
+}
