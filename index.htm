@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/pricing/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+
+    <title>Pricing example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./assets/pricing.css" rel="stylesheet">
+
+
+  </head>
+
+  <body>
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">Grower alpha model</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+      </nav>
+    </div>
+
+
+    <div class="container">
+      <div class="card-deck mb-3">
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Temperature</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">24 <small class="text-muted">°C</small></h1>
+          </div>
+          <canvas id="gauge1" width="100%"></canvas>
+
+        </div>
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Humudity</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">33 <small class="text-muted"> %</small></h1>
+          </div>
+          <canvas id="gauge2" width="100%"></canvas>
+        </div>
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Camera</h4>
+          </div>
+          <div>
+              <img style="width:100%;height: 250px;background-color: black" src="https://lachrymose-shrew-7957.dataplicity.io/cstream"/>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./assets/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="./assets/popper.min.js"></script>
+    <script src="./assets/bootstrap.min.js"></script>
+    <script src="./assets/holder.min.js"></script>
+    <script src="./assets/gauge.js"></script>
+    <script>
+      $( document ).ready(function() {
+
+        var opts = {
+          lines: 12, // The number of lines to draw
+          angle: 0.15, // The length of each line
+          lineWidth: 0.44, // The line thickness
+          pointer: {
+            length: 0.9, // The radius of the inner circle
+            strokeWidth: 0.035, // The rotation offset
+            color: '#000000' // Fill color
+          },
+          colorStart: '#6FADCF',   // Colors
+          colorStop: '#8FC0DA',    // just experiment with them
+          strokeColor: '#E0E0E0',   // to see which ones work best for you
+          generateGradient: true
+        };
+
+        var target = document.getElementById('gauge1'); // your canvas element
+        var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+        gauge.maxValue = 3000; // set max gauge value
+        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        gauge.set(1250); // set actual value
+
+
+        var target2 = document.getElementById('gauge2'); // your canvas element
+        var gauge2 = new Gauge(target2).setOptions(opts); // create sexy gauge!
+        gauge2.maxValue = 3000; // set max gauge value
+        gauge2.animationSpeed = 32; // set animation speed (32 is default value)
+        gauge2.set(1250); // set actual value
+        
+      });
+
+
+      </script>
+
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+  
+
+  <div style="background-color: rgb(255, 143, 0); display: none; color: white; text-align: center; position: fixed; top: 0px; left: 0px; width: 100%; height: auto; min-width: 100%; min-height: auto; max-width: 100%; font: 12px &quot;Helvetica Neue&quot;, Helvetica, Arial, Geneva, sans-serif; cursor: pointer; padding: 5px;"><span style="color: white; font: 12px &quot;Helvetica Neue&quot;, Helvetica, Arial, Geneva, sans-serif;">You have turned off the paragraph player. You can turn it on again from the options page.</span><img src="chrome-extension://gfjopfpjmkcfgjpogepmdjmcnihfpokn/img/icons/icon-close_16.png" style="width: 20px; height: auto; min-width: 20px; min-height: auto; max-width: 20px; float: right; margin-right: 10px;"></div>
+</body>
+</html>
