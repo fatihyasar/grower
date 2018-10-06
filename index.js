@@ -28,7 +28,7 @@ client.on('message', function (topic, message) {
     // message is Buffer
     console.log("topic : " + topic);
     console.log("message : " + message.toString());
-    io.sockets.emit('humudityChanged', message);
+    io.sockets.emit('humudityChanged', JSON.parse(message));
 });
 
 
