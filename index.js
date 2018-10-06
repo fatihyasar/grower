@@ -26,8 +26,8 @@ client.on('connect', function () {
 
 client.on('message', function (topic, message) {
     // message is Buffer
-    console.log(message.toString())
-    client.end()
+    console.log("topic : " + topic);
+    console.log("message : " + message.toString());
 });
 
 
@@ -39,6 +39,7 @@ io.on('connection', function(socket) {
       });
 });
 
+/*
 setInterval(function() {
     var obj = {
         temp : Math.floor(Math.random() * Math.floor(80)),
@@ -47,6 +48,7 @@ setInterval(function() {
 
     io.sockets.emit('humudityChanged', obj);
 }, 1000);
+*/
 
 server.listen(process.env.PORT || 8079, function(){
     console.log('app running');
