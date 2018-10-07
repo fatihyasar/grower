@@ -13,7 +13,7 @@
     <link href="./assets/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="./assets/pricing.css" rel="stylesheet">
+    <link href="./assets/site.css" rel="stylesheet">
 
 
   </head>
@@ -72,19 +72,15 @@
             <div class="card-body">
                 <form class="form-inline mb-3">
                     <div class="form-group mb-2">
-                        <label for="motor1" >Motor-1 (<span id="motor_1_value">10</span>)</label>
+                        <label for="motor1" >Motor-1 - Speed : (<span id="motor_1_value">10</span>)</label>
                     </div>
-
-                    <div class="form-group mx-sm-3 mb-2">
-                        <input class="form-check-input" type="checkbox" id="reverseCheck">
-                        <label class="form-check-label" for="reverseCheck">
-                          Reverse 
-                        </label>
-                        </div>
                  </form>
-                
+                 <div class="form-group mb-2">
+                    <button type="button" id="btnStopMotor1" class="btn btn-danger pull-right">Stop</button>
+                  </div>
+            
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="0" class="slider" id="motor1Range">
+                    <input type="range" min="-100" max="100" value="0" class="slider" id="motor1Range">
                   </div>
             </div>
           </div>
@@ -103,6 +99,7 @@
     <script src="./assets/holder.min.js"></script>
     <script src="./assets/gauge.js"></script>
     <script>
+      
       $( document ).ready(function() {
 
         var opts = {
@@ -135,14 +132,14 @@
         gauge2.set(0); // set actual value
         
         //socket.io
-        //var socket = io();
-        var socket = io.connect('https://lachrymose-shrew-7957.dataplicity.io/', {secure: true});
+        var socket = io();
+        //var socket = io.connect('https://lachrymose-shrew-7957.dataplicity.io/', {secure: true});
         socket.on('connect', function(){
           console.log('socket connected');
         });
 
         socket.on('humudityChanged', function(data){
-            console.log('data : ' + JSON.stringify(data));
+            console.log('humudityChanged : ' + JSON.stringify(data));
             gauge.set(data.temp);
             $("#tempLabel").text(data.temp);
             gauge2.set(data.humidity);
@@ -150,20 +147,38 @@
             
         });
 
+        socket.on('motorStateChanged', function(data){
+            console.log('motorStateChanged : ' + JSON.stringify(data));            
+        });
+
+
         socket.on('disconnect', function(){
           console.log('socket disconnected');
         });
 
-
         //motor-1 output
-        var slider = document.getElementById("motor1Range");
-        var output = document.getElementById("motor_1_value");
-        output.innerHTML = slider.value; 
+        var motor1Slider = document.getElementById("motor1Range");
+        var motor1Label = document.getElementById("motor_1_value");
+        motor1Label.innerHTML = motor1Slider.value; 
 
         // Update the current slider value (each time you drag the slider handle)
-        slider.oninput = function() {
-            output.innerHTML = this.value;
-        }
+        motor1Slider.oninput = function() {
+          motor1Label.innerHTML = this.value;
+          var motorData = {
+            motorNumber : 1,
+            speed : this.value
+          };
+          socket.emit("motorSpeedChanged", motorData);
+        };
+
+        $( "#btnStopMotor1" ).click(function() {
+          var motorData = {
+            motorNumber : 1
+          };
+          motor1Slider.value = 0;
+          motor1Label.innerHTML = 0;
+          socket.emit("stopMotor", motorData);           
+        });
       });
 
 

@@ -4,7 +4,7 @@ var server      = require('http').createServer(app);
 var io          = require('socket.io')(server);
 var ejs         = require('ejs');
 var mqtt        = require('mqtt');
-var client      = mqtt.connect('mqtt://127.0.0.1');
+var client      = mqtt.connect('mqtt://m2m.eclipse.org');
 
 app.use('/assets', express.static(__dirname + '/assets'));
 app.set('view engine', 'ejs');
@@ -16,28 +16,44 @@ app.get('/', function(req, res) {
 //mqtt 
 client.on('connect', function () {
     console.log('Connected MQTT server');
-    client.subscribe('/sensors/temperature', function (err) {
-        console.log('Subscribed to temperature channel. Error : ' + err);
-        if (!err) {
-        //client.publish('presence', 'Hello mqtt')
-      }
-    });
+
+    client.subscribe('/sensors/temperature');
+    client.subscribe('/actuators/motors/+/state');
+    client.subscribe('/actuators/motors/+/speed');
+    client.subscribe('/actuators/motors/+/direction');
 });
 
 client.on('message', function (topic, message) {
     // message is Buffer
     console.log("topic : " + topic);
     console.log("message : " + message.toString());
-    io.sockets.emit('humudityChanged', JSON.parse(message));
+
+    var params = topic.split('/');    
+    var data = {
+        motorNumber : params[3],
+        message : message.toString()
+    }
+    io.sockets.emit('motorStateChanged', data);
 });
 
 
 //Socket.io 
 io.on('connection', function(socket) {
     console.log('a device connected');
-    socket.on('chat message', function(msg){
-        console.log('message: ' + msg);
-      });
+    socket.on('motorSpeedChanged', function(msg){
+        console.log('message: ' + JSON.stringify(msg));
+
+        var topic = "/actuators/motors/" + msg.motorNumber + "/start/" + msg.speed;
+        client.publish(topic)
+    });
+
+    socket.on('stopMotor', function(msg){
+        console.log('message: ' + JSON.stringify(msg));
+
+        var topic = "/actuators/motors/" + msg.motorNumber + "/stop";
+        client.publish(topic)
+    });
+    
 });
 
 /*
