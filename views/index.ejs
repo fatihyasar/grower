@@ -51,7 +51,7 @@
 
         <div class="card mb-4 box-shadow">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Camera</h4>
+            <h4 class="my-0 font-weight-normal">Live Broadcast</h4>
           </div>
           <div>
               <a href="https://lachrymose-shrew-7957.dataplicity.io/cstream">
@@ -146,7 +146,6 @@
             console.log('humudityChanged : ' + data);
 
             var received = JSON.parse(data);
-            console.log("temp : " + received.temp);
             $("#tempLabel").text(received.temp);
             gauge.set(received.temp);
             gauge2.set(received.humidity);
