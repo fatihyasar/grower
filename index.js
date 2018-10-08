@@ -28,12 +28,18 @@ client.on('message', function (topic, message) {
     console.log("topic : " + topic);
     console.log("message : " + message.toString());
 
-    var params = topic.split('/');    
-    var data = {
-        motorNumber : params[3],
-        message : message.toString()
+    if(topic === "/actuators/motors") {
+        var params = topic.split('/');    
+        var data = {
+            motorNumber : params[3],
+            message : message.toString()
+        }
+        io.sockets.emit('motorStateChanged', data);   
+
+    } else if(topic === "/sensors/temperature") {
+
+        io.sockets.emit('humudityChanged', message);
     }
-    io.sockets.emit('motorStateChanged', data);
 });
 
 
