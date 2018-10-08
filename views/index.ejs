@@ -78,9 +78,12 @@
                  <div class="form-group mb-2">
                     <button type="button" id="btnStopMotor1" class="btn btn-danger pull-right">Stop</button>
                   </div>
-            
-                <div class="slidecontainer">
-                    <input type="range" min="-100" max="100" value="0" class="slider" id="motor1Range">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="motor1_Reverse">
+                    <label class="form-check-label" for="exampleCheck1">Reverse</label>
+                  </div>
+                  <div class="slidecontainer">
+                    <input type="range" min="0" max="100" value="0" class="slider" id="motor1Range">
                   </div>
             </div>
           </div>
@@ -170,7 +173,8 @@
           motor1Label.innerHTML = this.value;
           var motorData = {
             motorNumber : 1,
-            speed : this.value
+            speed : this.value,
+            dir : $("#motor1_Reverse").is(':checked') ? "0" : "1"
           };
           socket.emit("motorSpeedChanged", motorData);
         };
@@ -183,6 +187,9 @@
           motor1Label.innerHTML = 0;
           socket.emit("stopMotor", motorData);           
         });
+
+        //motor1_Reverse
+
       });
 
 

@@ -49,7 +49,7 @@ io.on('connection', function(socket) {
     socket.on('motorSpeedChanged', function(msg){
         console.log('message: ' + JSON.stringify(msg));
 
-        var topic = "/actuators/motors/" + msg.motorNumber + "/start/" + msg.speed;
+        var topic = "/actuators/motors/" + msg.motorNumber + "/start/"+ msg.dir +"/" + msg.speed;
         client.publish(topic)
     });
 
