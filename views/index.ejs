@@ -139,7 +139,7 @@
         });
 
         socket.on('humudityChanged', function(data){
-            console.log('humudityChanged : ' + JSON.stringify(data));
+            console.log('humudityChanged : ' + data);
             gauge.set(data.temp);
             $("#tempLabel").text(data.temp);
             gauge2.set(data.humidity);
