@@ -144,7 +144,9 @@
             var received = JSON.parse(data);
             console.log("temp : " + received.temp);
             $("#tempLabel").text(received.temp);
+            gauge.set(received.temp);
             gauge2.set(received.humidity);
+
             $("#humudityLabel").text(received.humidity);
             
         });
