@@ -141,6 +141,7 @@
         socket.on('humudityChanged', function(data){
             console.log('humudityChanged : ' + data);
             gauge.set(data.temp);
+            console.log("temp : " + data.temp);
             $("#tempLabel").text(data.temp);
             gauge2.set(data.humidity);
             $("#humudityLabel").text(data.humidity);
