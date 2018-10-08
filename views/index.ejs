@@ -77,11 +77,11 @@
                  </form>
                  <div class="form-group mb-2">
                     <button type="button" id="btnStopMotor1" class="btn btn-danger pull-right">Stop</button>
-                  </div>
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="motor1_Reverse">
-                    <label class="form-check-label" for="exampleCheck1">Reverse</label>
-                  </div>
+                    <div class="form-check" style="text-align: right;">
+                      <input type="checkbox" class="form-check-input" id="motor1_Reverse">
+                      <label class="form-check-label" for="motor1_Reverse">Reverse</label>
+                    </div>
+                    </div>
                   <div class="slidecontainer">
                     <input type="range" min="0" max="100" value="0" class="slider" id="motor1Range">
                   </div>
@@ -102,7 +102,8 @@
     <script src="./assets/holder.min.js"></script>
     <script src="./assets/gauge.js"></script>
     <script>
-      
+      var motor1Slider;
+
       $( document ).ready(function() {
 
         var opts = {
@@ -150,8 +151,7 @@
             gauge.set(received.temp);
             gauge2.set(received.humidity);
 
-            $("#humudityLabel").text(received.humidity);
-            
+            $("#humudityLabel").text(received.humidity);            
         });
 
         socket.on('motorStateChanged', function(data){
@@ -164,19 +164,15 @@
         });
 
         //motor-1 output
-        var motor1Slider = document.getElementById("motor1Range");
+        motor1Slider = document.getElementById("motor1Range");
         var motor1Label = document.getElementById("motor_1_value");
         motor1Label.innerHTML = motor1Slider.value; 
 
         // Update the current slider value (each time you drag the slider handle)
         motor1Slider.oninput = function() {
           motor1Label.innerHTML = this.value;
-          var motorData = {
-            motorNumber : 1,
-            speed : this.value,
-            dir : $("#motor1_Reverse").is(':checked') ? "0" : "1"
-          };
-          socket.emit("motorSpeedChanged", motorData);
+          var dir = $("#motor1_Reverse").is(':checked') ? "0" : "1";
+          sendMotorData(1, this.value, dir);
         };
 
         $( "#btnStopMotor1" ).click(function() {
@@ -188,10 +184,23 @@
           socket.emit("stopMotor", motorData);           
         });
 
-        //motor1_Reverse
+        //motor1 reverse checkbox 
+        $("#motor1_Reverse").change(function() {
+          var dir = this.checked ? "0" : "1";
+          sendMotorData(1, motor1Slider.value, dir);
+        });
 
       });
+      
+      function sendMotorData(motorNumber, speed, dir) {
+        var motorData = {
+            motorNumber : motorNumber,
+            speed : speed,
+            dir : dir
+          };
+          socket.emit("motorSpeedChanged", motorData);
 
+      }
 
 
 
