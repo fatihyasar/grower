@@ -4,7 +4,7 @@ var server      = require('http').createServer(app);
 var io          = require('socket.io')(server);
 var ejs         = require('ejs');
 var mqtt        = require('mqtt');
-var client      = mqtt.connect('mqtt://m2m.eclipse.org');
+var client      = mqtt.connect('mqtt://192.168.1.55'); //m2m.eclipse.org
 
 app.use('/assets', express.static(__dirname + '/assets'));
 app.set('view engine', 'ejs');
