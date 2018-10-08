@@ -38,7 +38,7 @@ client.on('message', function (topic, message) {
 
     } else if(topic === "/sensors/temperature") {
 
-        io.sockets.emit('humudityChanged', message.toString());
+        io.sockets.emit('humudityChanged', message);
     }
 });
 
