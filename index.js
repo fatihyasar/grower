@@ -74,5 +74,5 @@ setInterval(function() {
 */
 
 server.listen(process.env.PORT || 8079, function(){
-    console.log('app running');
+    console.log('app running on : ' + 8079);
 });
