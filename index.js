@@ -48,7 +48,7 @@ io.on('connection', function(socket) {
     console.log('a device connected');
     socket.on('motorSpeedChanged', function(msg){
         console.log('message: ' + JSON.stringify(msg));
-
+        
         var topic = "/actuators/motors/" + msg.motorNumber + "/start/"+ msg.dir +"/" + msg.speed;
         client.publish(topic)
     });
