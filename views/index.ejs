@@ -339,7 +339,7 @@
           sendMotorData(1, motor1Slider.value, dir);
         });
 
-        $('#plug-1,#plug-2').on('change.bootstrapSwitch', function(e) {
+        $('#plug-2,#plug-3,#plug-4,#plug-5,#plug-6,#plug-7').on('change.bootstrapSwitch', function(e) {
             var plugid = parseInt(e.target.id.replace('plug-',''));
             var state = e.target.checked;
             console.log('plug : ' + plugid + ' state :' + state);

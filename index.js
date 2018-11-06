@@ -68,7 +68,7 @@ io.on('connection', function(socket) {
     socket.on('plugCommand', function(msg){
         console.log('plugCommand: ' + JSON.stringify(msg));
 
-        var topic = "/actuators/plugs/command/" + msg.plugid +"/" + (msg.state ? "start" : "stop")
+        var topic = "/actuators/plugs/command/" + msg.plugid +"/" + (msg.state ? "on" : "off")
         client.publish(topic)
     });
     
