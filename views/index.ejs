@@ -27,6 +27,7 @@
     </div>
 
 
+    
     <div class="container">
       <div class="card-deck mb-3">
         <div class="card mb-4 box-shadow">
@@ -63,6 +64,44 @@
     </div>
 
 
+    <div class="container">
+        <div class="card-deck mb-3">
+          <div class="card mb-4 box-shadow">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Water Temperature</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                  <h1 class="card-title pricing-card-title"><span id="waterTempLabel"></span><small class="text-muted">°C</small></h1>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card mb-4 box-shadow">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">EC</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                  <h1 class="card-title pricing-card-title"><span id="ecLabel"></span></h1>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card mb-4 box-shadow">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Water Level</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                  <h1 class="card-title pricing-card-title"><span id="waterLevelLabel"></span></h1>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+
 
     <div class="container">
       <div class="card-deck mb-3">
@@ -73,8 +112,8 @@
           <div class="card-body">
             <div class="form-group">
               <span class="switch switch-lg">
-                <input type="checkbox" class="switch" id="switch-lg1">
-                <label for="switch-lg1"></label>
+                <input type="checkbox" class="switch" id="plug-2">
+                <label for="plug-2"></label>
               </span>
             </div>
           </div>
@@ -87,8 +126,8 @@
           <div class="card-body">
             <div class="form-group">
               <span class="switch switch-lg">
-                <input type="checkbox" class="switch" id="switch-lg2">
-                <label for="switch-lg2"></label>
+                <input type="checkbox" class="switch" id="plug-3">
+                <label for="plug-3"></label>
               </span>
             </div>
           </div>
@@ -101,8 +140,8 @@
           <div class="card-body">
             <div class="form-group">
               <span class="switch switch-lg">
-                <input type="checkbox" class="switch" id="switch-lg3">
-                <label for="switch-lg3"></label>
+                <input type="checkbox" class="switch" id="plug-4">
+                <label for="plug-4"></label>
               </span>
             </div>
           </div>
@@ -120,8 +159,8 @@
           <div class="card-body">
             <div class="form-group">
               <span class="switch switch-lg">
-                <input type="checkbox" class="switch" id="switch-lg4">
-                <label for="switch-lg4"></label>
+                <input type="checkbox" class="switch" id="plug-5">
+                <label for="plug-5"></label>
               </span>
             </div>
           </div>
@@ -134,8 +173,8 @@
           <div class="card-body">
             <div class="form-group">
               <span class="switch switch-lg">
-                <input type="checkbox" class="switch" id="switch-lg5">
-                <label for="switch-lg5"></label>
+                <input type="checkbox" class="switch" id="plug-6">
+                <label for="plug-6"></label>
               </span>
             </div>
           </div>
@@ -148,8 +187,8 @@
           <div class="card-body">
             <div class="form-group">
               <span class="switch switch-lg">
-                <input type="checkbox" class="switch" id="switch-lg6">
-                <label for="switch-lg6"></label>
+                <input type="checkbox" class="switch" id="plug-7">
+                <label for="plug-7"></label>
               </span>
             </div>
           </div>
@@ -250,6 +289,20 @@
             $("#humudityLabel").text(received.humidity);            
         });
 
+
+        socket.on('ecChanged', function(data){
+            console.log('ecChanged : ' + data);
+            var received = JSON.parse(data);
+            $("#waterTempLabel").text(received.water_temp);   
+            $("#ecLabel").text(received.ec);   
+        });
+
+        socket.on('waterlevelChanged', function(data){
+          console.log('waterlevelChanged : ' + data);
+            var received = JSON.parse(data);
+            $("#waterLevelLabel").text(received.value);   
+        });
+
         socket.on('motorStateChanged', function(data){
             console.log('motorStateChanged : ' + JSON.stringify(data));            
         });
@@ -286,6 +339,17 @@
           sendMotorData(1, motor1Slider.value, dir);
         });
 
+        $('#plug-1,#plug-2').on('change.bootstrapSwitch', function(e) {
+            var plugid = parseInt(e.target.id.replace('plug-',''));
+            var state = e.target.checked;
+            console.log('plug : ' + plugid + ' state :' + state);
+            var cmd = {
+              'plugid' : plugid,
+              'state' : state
+            }
+            socket.emit("plugCommand", cmd);   
+
+        });
       });
       
       function sendMotorData(motorNumber, speed, dir) {

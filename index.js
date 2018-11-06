@@ -18,6 +18,8 @@ client.on('connect', function () {
     console.log('Connected MQTT server');
 
     client.subscribe('/sensors/temperature');
+    client.subscribe('/sensors/ec');
+    client.subscribe('/sensors/waterlevel');
     client.subscribe('/actuators/motors/+/state');
     client.subscribe('/actuators/motors/+/speed');
     client.subscribe('/actuators/motors/+/direction');
@@ -25,8 +27,8 @@ client.on('connect', function () {
 
 client.on('message', function (topic, message) {
     // message is Buffer
-    console.log("topic : " + topic);
-    console.log("message : " + message.toString());
+    //console.log("topic : " + topic);
+    //console.log("message : " + message.toString());
 
     if(topic === "/actuators/motors") {
         var params = topic.split('/');    
@@ -37,15 +39,18 @@ client.on('message', function (topic, message) {
         io.sockets.emit('motorStateChanged', data);   
 
     } else if(topic === "/sensors/temperature") {
-
         io.sockets.emit('humudityChanged', message.toString());
+    } else if(topic === "/sensors/ec") {
+        io.sockets.emit('ecChanged', message.toString());
+    } else if(topic === "/sensors/waterlevel") {
+        io.sockets.emit('waterlevelChanged', message.toString());
     }
 });
 
 
 //Socket.io 
 io.on('connection', function(socket) {
-    console.log('a device connected');
+    console.log('web client connected');
     socket.on('motorSpeedChanged', function(msg){
         console.log('message: ' + JSON.stringify(msg));
         
@@ -57,6 +62,13 @@ io.on('connection', function(socket) {
         console.log('message: ' + JSON.stringify(msg));
 
         var topic = "/actuators/motors/" + msg.motorNumber + "/stop";
+        client.publish(topic)
+    });
+
+    socket.on('plugCommand', function(msg){
+        console.log('plugCommand: ' + JSON.stringify(msg));
+
+        var topic = "/actuators/plugs/command/" + msg.plugid +"/" + (msg.state ? "start" : "stop")
         client.publish(topic)
     });
     
