@@ -53,9 +53,10 @@ client.on('message', function (topic, message) {
 io.on('connection', function(socket) {
     console.log('web client connected');
     socket.on('motorSpeedChanged', function(msg){
-        console.log('message: ' + JSON.stringify(msg));
+        console.log('motorSpeedChanged : ' + JSON.stringify(msg));
         
         var topic = "/actuators/motors/" + msg.motorNumber + "/start/"+ msg.dir +"/" + msg.speed;
+        console.log('publishing topic : ' + topic);
         client.publish(topic)
     });
 
