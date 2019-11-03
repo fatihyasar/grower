@@ -12,8 +12,6 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
-
-
 //mqtt 
 client.on('connect', function () {
     console.log('Connected MQTT server');
